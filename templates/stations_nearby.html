@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stations Nearby</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+    <style>
+        /* Stylizacja w stylu Facebooka */
+        body {
+            background-color: #F0F2F5;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 24px;
+            color: #1877F2;
+        }
+        h2 {
+            font-size: 18px;
+            color: #1877F2;
+        }
+        table {
+            background-color: #FFFFFF;
+            border: 1px solid #E9EBEE;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        th {
+            background-color: #F0F2F5;
+            border-bottom: 1px solid #E9EBEE;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+        }
+        a {
+            color: #1877F2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand navbar-dark bg-primary">
+            <a class="navbar-brand" href="/">Air Quality App</a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/stations">List all stations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/stations/nearby">Find stations nearby</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/map">Find stations on map</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container mt-4">
+        <h1 class="display-4">Stations Nearby</h1>
+        <h2>Location: {{ location }}</h2>
+        <h2>Radius: {{ radius }} km</h2>
+        <table id="stationsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for station in stations %}
+                <tr>
+                    <td><a href="/station/{{ station.id }}">{{ station.id }}</a></td>
+                    <td>{{ station.stationName }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#stationsTable').DataTable();
+        });
+    </script>
+</body>
+</html>

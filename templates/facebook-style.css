@@ -1,0 +1,36 @@
+body {
+  background-color: #f0f2f5;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  color: #fff;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item {
+  background-color: #fff;
+  border: none;
+}
+
+.list-group-item a {
+  color: #000;
+  text-decoration: none;
+}
+
+.list-group-item:hover {
+  background-color: #f0f2f5;
+}

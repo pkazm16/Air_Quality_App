@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Station Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <style>
+        /* Dodaj stylizację do wyśrodkowania tekstu w tabelach */
+        .dataTables_wrapper table {
+            text-align: center;
+        }
+
+        /* Dodaj poziomy scroll do tabeli */
+        .dataTables_wrapper .dataTables_scrollBody {
+            overflow-y: auto;
+            max-height: 400px; /* Dostosuj maksymalną wysokość */
+        }
+
+        /* Dodaj poziomy scroll do nagłówka tabeli */
+        .dataTables_wrapper .dataTables_scrollHead {
+            overflow-x: scroll;
+            overflow-y: hidden;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Air Quality App</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/stations">List all stations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stations/nearby">Find stations nearby</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/map">Find stations on map</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+    <h1 class="mt-4">Station Details</h1>
+
+    <h2 class="mt-4">Dane dla stanowiska pomiarowego</h2>
+    <table id="sensorTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Param Name</th>
+            <th>Param Formula</th>
+            <th>Param Code</th>
+            <th>Param ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sensor in station %}
+        <tr>
+            <td>{{ sensor.id }}</td>
+            <td>{{ sensor.param.paramName }}</td>
+            <td>{{ sensor.param.paramFormula }}</td>
+            <td>{{ sensor.param.paramCode }}</td>
+            <td>{{ sensor.param.idParam }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 class="mt-4">Dane pomiarowe</h2>
+    <table id="measurementTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Key</th>
+            <th>Date</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sensor in station %}
+        <tr>
+            <td>{{ sensor.key }}</td>
+            <td>{{ sensor.values.date }}</td>
+            <td>{{ sensor.values.value }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="mt-4">Indeks jakości powietrza</h3>
+    <table id="indexTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>stCalcDate</th>
+            <th>stIndexLevel</th>
+            <th>indexLevelName</th>
+            <th>stSourceDataDate</th>
+            <th>so2CalcDate</th>
+            <th>so2IndexLevelId</th>
+            <th>so2IndexLevelName</th>
+            <th>no2CalcDate</th>
+            <th>no2IndexLevel_id</th>
+            <th>no2IndexLevel_name</th>
+            <th>stIndexCrParam</th>
+            <th>pm10CalcDate</th>
+            <th>pm10CalcDate_id</th>
+            <th>pm10CalcDate_name</th>
+            <th>pm10SourceDataDate</th>
+            <th>pm25CalcDate</th>
+            <th>pm25IndexLevel_id</th>
+            <th>pm25IndexLevel_name</th>
+            <th>pm25SourceDataDate</th>
+            <th>o3CalcDate</th>
+            <th>o3IndexLevel</th>
+            <th>o3SourceDataDate</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sensor in station %}
+        <tr>
+            <td>{{ sensor.id }}</td>
+            <td>{{ sensor.stCalcDate }}</td>
+            <td>{{ sensor.stIndexLevel.stIndexLevelId }}</td>
+            <td>{{ sensor.stIndexLevel.indexLevelName }}</td>
+            <td>{{ sensor.stSourceDataDate }}</td>
+            <td>{{ sensor.so2CalcDate }}</td>
+            <td>{{ so2_index_level_id}}</td>
+            <td>{{ index_level_name }}</td>
+            <td>{{ sensor.no2CalcDate }}</td>
+            <td>{{ sensor.no2IndexLevel.id }}</td>
+            <td>{{ sensor.no2IndexLevel.indexLevelName  }}</td>
+            <td>{{ sensor.stIndexCrParam}}</td>
+            <td>{{ sensor.pm10CalcDate}}</td>
+            <td>{{ sensor.pm10IndexLevel.id}}</td>
+            <td>{{ sensor.pm10IndexLevel.indexLevelName}}</td>
+            <td>{{ sensor.pm10SourceDataDate }}</td>
+            <td>{{ sensor.pm25CalcDate }}</td>
+            <td>{{ sensor.pm25IndexLevel.id }}</td>
+            <td>{{ sensor.pm25IndexLevel.indexLevelName }}</td>
+            <td>{{ sensor.pm25SourceDataDate }}</td>
+            <td>{{ sensor.o3CalcDate }}</td>
+            <td>{{ sensor.o3IndexLevel }}</td>
+            <td>{{ sensor.o3SourceDataDate }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h4 class="mt-4">Air Quality Chart</h4>
+    <img src="data:image/png;base64,{{ air_quality_chart }}" alt="Air Quality Chart" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#sensorTable').DataTable();
+            $('#measurementTable').DataTable();
+            $('#indexTable').DataTable({
+                scrollY: '400px', // Ustaw wysokość scrolla dla tabeli
+                scrollCollapse: true,
+                paging: false,
+                scrollX: true // Dodaj poziomy scroll
+            });
+        });
+    </script>
+</body>
+</html>

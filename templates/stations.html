@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stations</title>
+  <!-- Dodaj linki do Bootstrapa i DataTables -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
+      <a class="navbar-brand" href="/">Air Quality App</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/stations">List all stations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stations/nearby">Find stations nearby</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/map">Find stations on map</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container mt-4">
+    <h1 class="display-4">Stations</h1>
+    <table id="stationsTable" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Station Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>City</th>
+          <th>Commune</th>
+          <th>District</th>
+          <th>Province</th>
+          <th>Street</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for station in stations %}
+        <tr>
+          <td><a href="/station/{{ station.id }}">{{ station.id }}</a></td>
+          <td>{{ station.stationName }}</td>
+          <td>{{ station.gegrLat }}</td>
+          <td>{{ station.gegrLon }}</td>
+          <td>{{ station.city.name }}</td>
+          <td>{{ station.city.commune.communeName }}</td>
+          <td>{{ station.city.commune.districtName }}</td>
+          <td>{{ station.city.commune.provinceName }}</td>
+          <td>{{ station.addressStreet }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Dodaj skrypty Bootstrapa, DataTables i jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#stationsTable').DataTable();
+    });
+  </script>
+</body>
+</html>

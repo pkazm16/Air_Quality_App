@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air Quality App</title>
+  <!-- Dodaj linki do Bootstrapa -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Dodaj link do arkusza stylów z motywem Facebooka -->
+  <link rel="stylesheet" href="facebook-style.css">
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Air Quality App</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/stations">List all stations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/stations/nearby">Find stations nearby</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/map">Find stations on map</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container mt-4">
+    <h1 class="display-4">Air Quality App</h1>
+    <p>Welcome to the Air Quality App!</p>
+    <p>Select an option:</p>
+    <ul class="list-group">
+      <li class="list-group-item"><a href="/stations">List all stations</a></li>
+      <li class="list-group-item"><a href="/stations/nearby">Find stations nearby</a></li>
+      <li class="list-group-item"><a href="/map">Find stations on map</a></li>
+    </ul>
+  </div>
+
+  <!-- Dodaj skrypty Bootstrapa i jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  <script>
+    // JavaScript Guess the Number Game
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    const guessInput = document.getElementById('guess-input');
+    const guessButton = document.getElementById('guess-button');
+    const resultMessage = document.getElementById('result-message');
+
+    guessButton.addEventListener('click', handleGuess);
+
+    function handleGuess() {
+      const guess = parseInt(guessInput.value);
+      if (isNaN(guess) || guess < 1 || guess > 100) {
+        resultMessage.textContent = 'Please enter a valid number between 1 and 100.';
+        resultMessage.classList.remove('text-success', 'text-danger');
+        resultMessage.classList.add('text-warning');
+      } else if (guess === randomNumber) {
+        resultMessage.textContent = 'Congratulations! You guessed the correct number.';
+        resultMessage.classList.remove('text-warning', 'text-danger');
+        resultMessage.classList.add('text-success');
+      } else if (guess < randomNumber) {
+        resultMessage.textContent = 'Try a higher number.';
+        resultMessage.classList.remove('text-warning', 'text-success');
+        resultMessage.classList.add('text-danger');
+      } else {
+        resultMessage.textContent = 'Try a lower number.';
+        resultMessage.classList.remove('text-warning', 'text-success');
+        resultMessage.classList.add('text-danger');
+      }
+      guessInput.value = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Mapa</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('map').setView([52.2297, 21.0122], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var stations = {{ stations|tojson }};
+
+    function goToStationDetails(stationId) {
+      window.location.href = '/station/' + stationId + '/';
+    }
+
+    for (var i = 0; i < stations.length; i++) {
+  var station = stations[i];
+  var marker = L.marker([station.gegrLat, station.gegrLon]).addTo(map);
+  marker.bindPopup('<b>' + station.stationName + '</b><br>' + station.addressStreet);
+  marker.on('click', (function(stationId) {
+    return function() {
+      goToStationDetails(stationId);
+    };
+  })(station.id));
+}
+  </script>
+</body>
+</html>
